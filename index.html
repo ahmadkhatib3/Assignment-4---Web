@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ATMOS - a simple weather dashboard with live data from Open-Meteo.">
+  <title>ATMOS | Weather Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+
+    <header class="topbar">
+      <div class="brand"><span class="brand-dot" aria-hidden="true"></span> ATMOS</div>
+      <p class="tagline">Live conditions, anywhere</p>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Weather, distilled</p>
+        <h1>What&rsquo;s the sky doing?</h1>
+        <p class="lead">Search any city for a quiet, clear view of the conditions outside.</p>
+
+        <form id="search-form" class="search" role="search" novalidate>
+          <label for="city-input" class="sr-only">City name</label>
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="city-input" type="text" placeholder="Search a city, e.g. Beirut" autocomplete="off" maxlength="80" required>
+          <button type="button" id="clear-btn" class="clear-btn" aria-label="Clear search" hidden>&times;</button>
+          <button type="submit" id="search-btn" class="search-btn">
+            <span class="btn-label">Search</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- Loading indicator (shown while a request is in progress) -->
+        <div id="loading" class="loading" role="status" hidden>
+          <span class="loading-ring" aria-hidden="true"></span>
+          <span>Fetching live weather&hellip;</span>
+        </div>
+
+        <!-- Error message (shown for invalid cities, network errors, rate limits...) -->
+        <div id="error" class="error" role="alert" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+          <p id="error-text"></p>
+        </div>
+      </section>
+
+      <!-- Weather results are rendered here by script.js -->
+      <section id="weather" class="weather" aria-live="polite" hidden>
+        <article class="current">
+          <div class="place">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            <div>
+              <h2 id="city-name"></h2>
+              <p id="date-text" class="muted"></p>
+            </div>
+          </div>
+
+          <div class="temp-row">
+            <p class="temp"><span id="temp-value"></span><sup>&deg;</sup></p>
+            <div id="weather-icon" class="icon" aria-hidden="true"></div>
+          </div>
+
+          <div class="condition-row">
+            <div>
+              <p id="condition" class="condition"></p>
+              <p id="feels" class="muted"></p>
+            </div>
+            <p id="hi-lo" class="hi-lo"></p>
+          </div>
+        </article>
+
+        <aside class="details">
+          <div class="details-head">
+            <h3>Today&rsquo;s details</h3>
+            <span id="updated" class="muted small"></span>
+          </div>
+          <div class="stats">
+            <div class="stat"><p class="label">Humidity</p><p class="value" id="humidity"></p><p class="muted small">Moisture in the air</p></div>
+            <div class="stat"><p class="label">Wind</p><p class="value" id="wind"></p><p class="muted small">At 10 metres</p></div>
+            <div class="stat"><p class="label">Precipitation</p><p class="value" id="precip"></p><p class="muted small">Current amount</p></div>
+            <div class="stat"><p class="label">Sunrise</p><p class="value" id="sunrise"></p><p class="muted small" id="sunset"></p></div>
+          </div>
+          <div class="details-foot">
+            <span id="coords"></span>
+            <span>Data by Open-Meteo</span>
+          </div>
+        </aside>
+
+        <section class="forecast" aria-label="5 day forecast">
+          <h3>Next 5 days</h3>
+          <ul id="forecast-list" class="forecast-list"></ul>
+        </section>
+      </section>
+    </main>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
